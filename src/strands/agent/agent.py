@@ -13,7 +13,6 @@ import asyncio
 import json
 import logging
 import os
-import random
 from concurrent.futures import ThreadPoolExecutor
 from threading import Thread
 from typing import Any, AsyncIterator, Callable, Dict, List, Mapping, Optional, Union
@@ -40,6 +39,7 @@ from .conversation_manager import (
     ConversationManager,
     SlidingWindowConversationManager,
 )
+import secrets
 
 logger = logging.getLogger(__name__)
 
@@ -109,7 +109,7 @@ class Agent:
                     raise AttributeError(f"Tool '{name}' not found")
 
                 # Create unique tool ID and set up the tool request
-                tool_id = f"tooluse_{name}_{random.randint(100000000, 999999999)}"
+                tool_id = f"tooluse_{name}_{secrets.SystemRandom().randint(100000000, 999999999)}"
                 tool_use = {
                     "toolUseId": tool_id,
                     "name": name,
